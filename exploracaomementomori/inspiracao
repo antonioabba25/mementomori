@@ -1,0 +1,143 @@
+Objetivo:
+Criar uma aplicação web minimalista que receba como entrada uma data de nascimento no formato DD/MM/AAAA e gere como saída uma visualização em tabela contendo todas as semanas de vida da pessoa, desde a data de nascimento até o limite de 84 anos.
+
+Conceito visual:
+A interface deve transmitir sobriedade, contemplação do tempo e senso de finitude, com inspiração estética nos estoicos romanos, especialmente Marco Aurélio e Cícero.
+O design deve ser:
+- minimalista
+- elegante
+- silencioso visualmente
+- com aparência quase editorial
+- sem excesso de cores, ícones ou ornamentos
+
+Direção de design:
+- paleta em tons neutros: off-white, areia, pedra, carvão, bronze envelhecido
+- tipografia com ar clássico e sóbrio
+- espaçamento generoso
+- linhas finas e discretas
+- forte sensação de ordem, proporção e disciplina
+- aparência compatível com um quadro de vida contemplativo e filosófico
+- evitar visual tecnológico futurista
+- evitar excesso de animações
+- evitar elementos infantis ou lúdicos
+
+Funcionalidade principal:
+1. O usuário informa uma data de nascimento no formato DD/MM/AAAA.
+2. A aplicação valida a data.
+3. A aplicação calcula todas as semanas da vida da pessoa, desde a semana do nascimento até completar 84 anos.
+4. O resultado deve ser exibido como uma grade/tabela de semanas.
+5. Cada célula representa uma semana.
+6. As semanas já vividas até a data atual devem aparecer preenchidas.
+7. As semanas ainda não vividas devem aparecer vazias ou com contraste reduzido.
+8. A tabela deve incluir marcações laterais a cada 7 anos, para criar divisões visuais dos grandes ciclos da vida.
+9. O total visual deve cobrir 84 anos.
+
+Estrutura lógica esperada:
+- 84 anos
+- 52 semanas por ano como base visual
+- total aproximado: 84 x 52 = 4368 células
+- a grade pode ser organizada em linhas por ano e colunas por semana
+- cada linha representa 1 ano de vida
+- cada coluna representa uma semana daquele ano
+- ao lado esquerdo ou direito, inserir marcações especiais nos anos:
+  0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84
+
+Observações funcionais:
+- considerar que a visualização é conceitual e uniforme, usando 52 semanas por ano para organização gráfica
+- o cálculo de semanas vividas deve ser real, baseado na diferença entre a data atual e a data de nascimento
+- se quiser maior precisão interna, o cálculo pode considerar dias corridos e depois converter para semanas completas
+- visualmente, manter a grade regular
+- não exibir excesso de textos explicativos na tela
+- foco principal na visualização do tempo
+
+Experiência do usuário:
+- tela inicial com um campo único para data de nascimento
+- botão para gerar a visualização
+- resultado renderizado abaixo ou em uma nova seção
+- incluir um pequeno subtítulo contemplativo, algo discreto, como:
+  “A vida é composta de semanas; a virtude está em como se vive cada uma.”
+- permitir exportar a visualização futuramente, mas isso não precisa ser implementado agora se estiver fora do escopo
+
+Requisitos de implementação:
+- preferencialmente em React
+- componente único ou estrutura simples
+- código limpo e modular
+- responsivo, mas com prioridade para desktop
+- manter boa legibilidade mesmo com grande quantidade de células
+- considerar uso de CSS Grid para a grade de semanas
+- evitar bibliotecas pesadas se não forem necessárias
+
+Pseudocódigo da lógica:
+
+1. receber inputDataNascimento
+2. validar formato DD/MM/AAAA
+3. converter inputDataNascimento para objeto de data
+4. obter dataAtual
+5. calcular diferencaEmDias = dataAtual - dataNascimento
+6. calcular semanasVividas = floor(diferencaEmDias / 7)
+7. definir totalAnos = 84
+8. definir semanasPorAnoVisual = 52
+9. definir totalSemanasVisual = totalAnos * semanasPorAnoVisual
+
+10. criar estrutura anos = []
+11. para ano de 0 até 83:
+      criar lista semanasDoAno = []
+      para semana de 0 até 51:
+           indiceGlobalSemana = ano * 52 + semana
+           se indiceGlobalSemana < semanasVividas:
+                status = "vivida"
+           senão:
+                status = "futura"
+           adicionar célula com:
+                - índice da semana
+                - status
+                - ano correspondente
+                - semana correspondente
+      adicionar semanasDoAno em anos
+
+12. renderizar tabela:
+      para cada ano em anos:
+           mostrar marcador lateral com número do ano
+           se ano for múltiplo de 7:
+                aplicar destaque lateral sutil
+           renderizar 52 células da linha
+
+13. estilos:
+      células vividas = preenchidas com tom sóbrio escuro ou bronze discreto
+      células futuras = fundo claro com borda leve
+      múltiplos de 7 anos = linha lateral, número ou separador visual mais evidente
+      tipografia clássica e discreta
+      fundo geral claro e texturizado de forma quase imperceptível
+
+Sugestão de estrutura de componentes:
+- App
+- BirthDateForm
+- LifeWeeksGrid
+- YearRow
+- WeekCell
+- SideMarkers
+
+Sugestão de comportamento visual:
+- cabeçalho com título curto, como “Semanas de uma Vida”
+- subtítulo de inspiração estoica
+- formulário enxuto
+- grade centralizada
+- rolagem vertical suave
+- destaque sutil do ano atual da vida
+- possibilidade opcional de destacar a semana presente com um contorno fino
+
+Regras de estilo:
+- sem gradients chamativos
+- sem cores vibrantes
+- sem sombra excessiva
+- sem elementos com aparência de dashboard corporativo
+- o resultado deve parecer mais uma peça de contemplação do tempo do que uma ferramenta de produtividade
+
+Entrega desejada:
+Gerar a base do código de uma aplicação web funcional que:
+- receba a data de nascimento
+- calcule as semanas vividas
+- monte uma grade de 84 anos
+- marque visualmente semanas passadas e futuras
+- adicione divisões laterais a cada 7 anos
+- utilize estética minimalista com inspiração estoica romana

@@ -4,12 +4,13 @@ import { SideMarkers } from './SideMarkers'
 import { YearRow } from './YearRow'
 
 interface LifeWeeksGridProps {
-  variant?: 'export' | 'screen'
+  quote: string
+  variant?: 'screen' | 'widget'
   visualization: LifeVisualization
 }
 
 export const LifeWeeksGrid = forwardRef<HTMLElement, LifeWeeksGridProps>(
-  function LifeWeeksGrid({ variant = 'screen', visualization }, ref) {
+  function LifeWeeksGrid({ quote, variant = 'screen', visualization }, ref) {
     return (
       <article
         className={`life-composition life-composition--${variant}`}
@@ -17,6 +18,9 @@ export const LifeWeeksGrid = forwardRef<HTMLElement, LifeWeeksGridProps>(
       >
         <header className="composition-header">
           <h2>MEMENTO MORI</h2>
+          <p className="composition-quote" data-testid="composition-quote">
+            {quote}
+          </p>
         </header>
 
         <section

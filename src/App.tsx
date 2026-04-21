@@ -1,19 +1,20 @@
-import { startTransition, useRef, useState, type FormEvent } from 'react'
+import { startTransition, useState, type FormEvent } from 'react'
 import { format } from 'date-fns'
 import './App.css'
 import { BirthDateForm } from './components/BirthDateForm'
 import { ExportButton } from './components/ExportButton'
-import { LifeWeeksGrid } from './components/LifeWeeksGrid'
+import { MobileWallpaperFrame } from './components/MobileWallpaperFrame'
 import {
   type LifeVisualization,
   createLifeVisualization,
 } from './lib/life-weeks'
+import { pickStoicQuote } from './lib/stoic-quotes'
 
 function App() {
   const [birthDateInput, setBirthDateInput] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [selectedQuote, setSelectedQuote] = useState(pickStoicQuote)
   const [visualization, setVisualization] = useState<LifeVisualization | null>(null)
-  const exportTargetRef = useRef<HTMLElement | null>(null)
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -27,6 +28,7 @@ function App() {
 
     setErrorMessage('')
     startTransition(() => {
+      setSelectedQuote(pickStoicQuote())
       setVisualization(result.visualization)
     })
   }
@@ -47,14 +49,13 @@ function App() {
     <main className="page-shell">
       <section className="hero-panel">
         <p className="eyebrow">Memento Mori</p>
-        <h1>Semanas de uma Vida</h1>
+        <h1>Uma visualizacao estoica do tempo.</h1>
         <p className="intro">
-          Uma visualizacao silenciosa do tempo vivido, organizada em semanas ate
-          o horizonte dos 84 anos.
+          Transforme uma data de nascimento em uma arquitetura visivel da vida:
+          84 anos, 4.368 semanas e uma leitura mais honesta do presente.
         </p>
         <p className="quote">
-          A vida e composta de semanas; a virtude esta em como se vive cada
-          uma.
+          Nao para assustar. Para esclarecer.
         </p>
       </section>
 
@@ -78,19 +79,28 @@ function App() {
               </div>
               <ExportButton
                 downloadName={exportFileName}
+                quote={selectedQuote}
                 visualization={visualization}
               />
             </div>
 
-            <div className="preview-scroll">
-              <LifeWeeksGrid ref={exportTargetRef} visualization={visualization} />
+            <div className="wallpaper-preview">
+              <div className="wallpaper-preview__viewport">
+                <div className="wallpaper-preview__scale">
+                  <MobileWallpaperFrame
+                    quote={selectedQuote}
+                    visualization={visualization}
+                  />
+                </div>
+              </div>
             </div>
           </section>
         ) : (
           <section className="empty-state" aria-live="polite">
             <p>
-              Informe a data de nascimento e gere a composicao para revelar a
-              extensao visual das semanas.
+              Informe a data de nascimento para gerar o wallpaper final:
+              titulo, frase aleatoria e grade de semanas em uma unica
+              composicao contemplativa.
             </p>
           </section>
         )}

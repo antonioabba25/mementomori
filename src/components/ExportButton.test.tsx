@@ -17,7 +17,7 @@ describe('ExportButton', () => {
     toJpegMock.mockClear()
   })
 
-  it('asks for the destination device before exporting', async () => {
+  it('exports the single final mobile wallpaper preset', async () => {
     const user = userEvent.setup()
     const visualizationResult = createLifeVisualization(
       '20/03/1989',
@@ -31,8 +31,10 @@ describe('ExportButton', () => {
     toJpegMock.mockImplementationOnce(async (...args: unknown[]) => {
       const stage = args[0] as HTMLElement
 
-      expect(stage.getAttribute('data-export-stage')).toBe('desktop')
-      expect(stage.querySelector('.life-composition')).toBeTruthy()
+      expect(stage.getAttribute('data-export-stage')).toBe('iphone16-widget-90')
+      expect(stage.querySelector('.life-composition--widget')).toBeTruthy()
+      expect(stage.textContent).toContain('MEMENTO MORI')
+      expect(stage.textContent).toContain('O tempo nao negocia com distracoes.')
 
       return 'data:image/jpeg;base64,fake'
     })
@@ -44,28 +46,20 @@ describe('ExportButton', () => {
     render(
       <ExportButton
         downloadName="memento-mori"
+        quote="O tempo nao negocia com distracoes."
         visualization={visualizationResult.visualization}
       />,
     )
 
-    await user.click(screen.getByRole('button', { name: 'Exportar JPG' }))
-
-    expect(
-      screen.getByRole('heading', { name: 'Qual e o dispositivo de destino?' }),
-    ).toBeTruthy()
-
-    await user.click(screen.getByLabelText('Desktop'))
-    await user.click(
-      screen.getByRole('button', { name: 'Confirmar exportacao' }),
-    )
+    await user.click(screen.getByRole('button', { name: 'Exportar JPG Final' }))
 
     expect(toJpegMock).toHaveBeenCalledTimes(1)
     expect(toJpegMock).toHaveBeenCalledWith(
       expect.any(HTMLDivElement),
       expect.objectContaining({
-        canvasWidth: 2560,
-        canvasHeight: 1440,
-        pixelRatio: 3,
+        canvasWidth: 1320,
+        canvasHeight: 2868,
+        pixelRatio: 2,
       }),
     )
 

@@ -26,11 +26,12 @@ describe('App', () => {
     await user.click(screen.getByRole('button', { name: 'Gerar visualizacao' }))
 
     expect(
-      screen.getAllByRole('heading', { name: 'Semanas de uma Vida' }).length,
-    ).toBeGreaterThan(0)
+      screen.getByRole('heading', { name: 'Uma visualizacao estoica do tempo.' }),
+    ).toBeTruthy()
     expect(screen.getAllByTestId('week-cell')).toHaveLength(4368)
+    expect(screen.getByTestId('composition-quote').textContent).toBeTruthy()
     expect(
-      screen.getByRole('button', { name: 'Exportar JPG' }),
+      screen.getByRole('button', { name: 'Exportar JPG Final' }),
     ).toBeTruthy()
     expect(screen.getByTestId('side-marker-0')).toBeTruthy()
     expect(screen.getByTestId('side-marker-84')).toBeTruthy()

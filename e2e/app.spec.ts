@@ -11,12 +11,9 @@ test('generates the life grid from a birth date', async ({ page }) => {
       name: 'MEMENTO MORI',
     }),
   ).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Exportar JPG' })).toBeVisible()
-  await expect(page.locator('[data-testid="week-cell"]')).toHaveCount(4368)
-
-  await page.getByRole('button', { name: 'Exportar JPG' }).click()
-
+  await expect(page.getByTestId('composition-quote')).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: 'Qual e o dispositivo de destino?' }),
+    page.getByRole('button', { name: 'Exportar JPG Final' }),
   ).toBeVisible()
+  await expect(page.locator('[data-testid="week-cell"]')).toHaveCount(4368)
 })
