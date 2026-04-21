@@ -10,6 +10,27 @@ import {
 } from './lib/life-weeks'
 import { pickStoicQuote } from './lib/stoic-quotes'
 
+const CONCEPT_SECTIONS = [
+  {
+    id: 'sobre-memento-mori',
+    linkLabel: 'Saiba mais sobre Memento Mori',
+    title: 'Memento Mori',
+    paragraphs: [
+      'Memento mori é um lembrete filosófico de que a vida termina. A proposta não é cultivar morbidez, mas viver com mais lucidez, presença e critério diante do que realmente importa.',
+      'Nesta aplicação, essa ideia ganha forma visual: o tempo deixa de ser abstração e passa a ser visto em semanas. O que já foi vivido aparece preenchido; o que permanece aberto exige responsabilidade.',
+    ],
+  },
+  {
+    id: 'sobre-sete-idades',
+    linkLabel: 'Saiba mais sobre as 7 idades do homem',
+    title: 'As 7 idades do homem',
+    paragraphs: [
+      'A formulação mais conhecida das sete idades do homem aparece em Shakespeare, em As You Like It. Nela, a vida é apresentada como uma sequência de papéis: infante, estudante, amante, soldado, juiz, pantalão e segunda infância.',
+      'Aqui, essa tradição funciona como um mapa simbólico, não como ciência da vida. Os marcadores a cada 7 anos transformam a grade em capítulos contemplativos, ajudando a perceber mudanças de papel, exigência, perda e maturidade ao longo do tempo.',
+    ],
+  },
+] as const
+
 function App() {
   const [birthDateInput, setBirthDateInput] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -49,14 +70,12 @@ function App() {
     <main className="page-shell">
       <section className="hero-panel">
         <p className="eyebrow">Memento Mori</p>
-        <h1>Uma visualizacao estoica do tempo.</h1>
+        <h1>Uma visualização estoica do tempo.</h1>
         <p className="intro">
-          Transforme uma data de nascimento em uma arquitetura visivel da vida:
+          Transforme uma data de nascimento em uma arquitetura visível da vida:
           84 anos, 4.368 semanas e uma leitura mais honesta do presente.
         </p>
-        <p className="quote">
-          Nao para assustar. Para esclarecer.
-        </p>
+        <p className="quote">Não para assustar. Para esclarecer.</p>
       </section>
 
       <section className="workspace">
@@ -71,9 +90,9 @@ function App() {
           <section className="result-panel" aria-live="polite">
             <div className="result-toolbar">
               <div>
-                <p className="result-toolbar__label">Composicao gerada</p>
+                <p className="result-toolbar__label">Composição gerada</p>
                 <p className="result-toolbar__meta">
-                  {visualization.weeksLived} semanas completas vividas ate{' '}
+                  {visualization.weeksLived} semanas completas vividas até{' '}
                   {visualization.generatedAtLabel}
                 </p>
               </div>
@@ -94,13 +113,28 @@ function App() {
                 </div>
               </div>
             </div>
+
+            <section className="concept-sections" aria-label="Leituras conceituais">
+              {CONCEPT_SECTIONS.map((section) => (
+                <article
+                  key={section.id}
+                  className="concept-card"
+                  id={section.id}
+                >
+                  <h2>{section.title}</h2>
+                  {section.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </article>
+              ))}
+            </section>
           </section>
         ) : (
           <section className="empty-state" aria-live="polite">
             <p>
               Informe a data de nascimento para gerar o wallpaper final:
-              titulo, frase aleatoria e grade de semanas em uma unica
-              composicao contemplativa.
+              título, frase aleatória e grade de semanas em uma única
+              composição contemplativa.
             </p>
           </section>
         )}

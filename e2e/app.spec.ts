@@ -4,7 +4,7 @@ test('generates the life grid from a birth date', async ({ page }) => {
   await page.goto('/')
 
   await page.getByLabel('Data de nascimento').fill('20/04/1990')
-  await page.getByRole('button', { name: 'Gerar visualizacao' }).click()
+  await page.getByRole('button', { name: 'Gerar visualização' }).click()
 
   await expect(
     page.locator('.life-composition').getByRole('heading', {

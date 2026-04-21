@@ -53,7 +53,7 @@ export function ExportButton({
       link.href = dataUrl
       link.click()
     } catch {
-      setErrorMessage('Nao foi possivel exportar o JPG agora.')
+      setErrorMessage('Não foi possível exportar o JPG agora.')
     } finally {
       setIsExporting(false)
       setShouldRenderExportFrame(false)
@@ -75,7 +75,7 @@ export function ExportButton({
         data-error={errorMessage ? 'true' : 'false'}
       >
         {errorMessage ||
-          'Saida unica em widget 90%, alinhada ao enquadramento final para iPhone.'}
+          'Saída única em widget 90%, alinhada ao enquadramento final para iPhone.'}
       </p>
 
       {shouldRenderExportFrame ? (

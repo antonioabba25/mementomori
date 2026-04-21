@@ -93,7 +93,7 @@ export function validateBirthDateInput(
   if (!isValid(parsedDate) || formatBirthDate(parsedDate) !== normalizedInput) {
     return {
       ok: false,
-      error: 'Essa data nao existe.',
+      error: 'Essa data não existe.',
     }
   }
 
@@ -103,7 +103,7 @@ export function validateBirthDateInput(
   if (birthDate.getTime() > currentDate.getTime()) {
     return {
       ok: false,
-      error: 'A data de nascimento nao pode estar no futuro.',
+      error: 'A data de nascimento não pode estar no futuro.',
     }
   }
 

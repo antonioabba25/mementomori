@@ -77,7 +77,7 @@ async function main() {
 
     await page.goto(serverUrl, { waitUntil: 'networkidle' })
     await page.getByLabel('Data de nascimento').fill(birthDate)
-    await page.getByRole('button', { name: 'Gerar visualizacao' }).click()
+    await page.getByRole('button', { name: 'Gerar visualização' }).click()
 
     const previousCount = await page.evaluate(() => window.__codexExports.length)
 

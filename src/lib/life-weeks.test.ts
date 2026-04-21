@@ -21,7 +21,7 @@ describe('validateBirthDateInput', () => {
 
     expect(result).toEqual({
       ok: false,
-      error: 'Essa data nao existe.',
+      error: 'Essa data não existe.',
     })
   })
 
@@ -30,7 +30,7 @@ describe('validateBirthDateInput', () => {
 
     expect(result).toEqual({
       ok: false,
-      error: 'A data de nascimento nao pode estar no futuro.',
+      error: 'A data de nascimento não pode estar no futuro.',
     })
   })
 })

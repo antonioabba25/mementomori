@@ -26,7 +26,7 @@ export const LifeWeeksGrid = forwardRef<HTMLElement, LifeWeeksGridProps>(
         <section
           className="life-grid"
           role="img"
-          aria-label={`Grade com ${visualization.totalWeeks} semanas e marcacoes de 7 em 7 anos.`}
+          aria-label={`Grade com ${visualization.totalWeeks} semanas e marcações de 7 em 7 anos.`}
         >
           {visualization.rows.map((row) => (
             <YearRow key={row.yearIndex} row={row} />

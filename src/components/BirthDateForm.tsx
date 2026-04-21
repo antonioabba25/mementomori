@@ -17,7 +17,7 @@ export function BirthDateForm({
     <form className="birth-form" onSubmit={onSubmit} noValidate>
       <div className="birth-form__header">
         <h2>Data de nascimento</h2>
-        <p>Uma unica entrada basta para compor toda a grade da vida.</p>
+        <p>Uma única entrada basta para compor toda a grade da vida.</p>
       </div>
 
       <div className="birth-form__fields">
@@ -39,7 +39,7 @@ export function BirthDateForm({
         </div>
 
         <button className="button-primary" type="submit">
-          Gerar visualizacao
+          Gerar visualização
         </button>
       </div>
 

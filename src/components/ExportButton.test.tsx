@@ -34,7 +34,7 @@ describe('ExportButton', () => {
       expect(stage.getAttribute('data-export-stage')).toBe('iphone16-widget-90')
       expect(stage.querySelector('.life-composition--widget')).toBeTruthy()
       expect(stage.textContent).toContain('MEMENTO MORI')
-      expect(stage.textContent).toContain('O tempo nao negocia com distracoes.')
+      expect(stage.textContent).toContain('O tempo não negocia com distrações.')
 
       return 'data:image/jpeg;base64,fake'
     })
@@ -46,7 +46,7 @@ describe('ExportButton', () => {
     render(
       <ExportButton
         downloadName="memento-mori"
-        quote="O tempo nao negocia com distracoes."
+        quote="O tempo não negocia com distrações."
         visualization={visualizationResult.visualization}
       />,
     )
