@@ -136,6 +136,9 @@ export function buildLifeGrid(
   const safeBirthWeekOffset = clampBirthWeekOffset(birthWeekOffset)
   const availableVisualWeeks = VISUAL_TOTAL_WEEKS - safeBirthWeekOffset
   const safeWeeksLived = Math.max(0, Math.min(weeksLived, availableVisualWeeks))
+
+  // The visual grid is always 84 x 52, so births later in the year shift the
+  // first reachable week and reduce the number of drawable future cells.
   const currentWeekIndex =
     safeWeeksLived >= availableVisualWeeks
       ? null
@@ -175,6 +178,8 @@ export function createLifeVisualization(
     return validation
   }
 
+  // We separate validation, raw elapsed weeks, and drawable grid state so the
+  // UI can stay simple while the date rules remain testable in isolation.
   const weeksLived = calculateWeeksLived(validation.date, now)
   const birthWeekOffset = calculateBirthWeekOffset(validation.date)
   const rows = buildLifeGrid(weeksLived, birthWeekOffset)

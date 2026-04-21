@@ -26,6 +26,8 @@ export function ExportButton({
     setErrorMessage('')
 
     try {
+      // The export frame stays out of the normal DOM until the user asks for a
+      // JPG, which keeps the on-screen grid count predictable for the app/tests.
       if (!exportFrameRef.current) {
         flushSync(() => {
           setShouldRenderExportFrame(true)
