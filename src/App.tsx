@@ -42,84 +42,136 @@ function App() {
     }
   }
 
+  const handleReturnHome = () => {
+    setVisualization(null)
+    setBirthDateInput('')
+    setErrorMessage('')
+
+    const scrollToTop = () => {
+      document
+        .querySelector('.site-masthead')
+        ?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
+    }
+
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(scrollToTop)
+      return
+    }
+
+    scrollToTop()
+  }
+
   const exportFileName = visualization
     ? `memento-mori-${format(visualization.birthDate, 'yyyy-MM-dd')}`
     : 'memento-mori'
 
   return (
-    <main className="page-shell">
-      <section className="hero-panel">
-        <p className="eyebrow">Memento Mori</p>
-        <h1>Uma visualização estoica do tempo.</h1>
-        <p className="intro">
-          Transforme uma data de nascimento em uma arquitetura visível da vida:
-          84 anos, 4.368 semanas e uma leitura mais honesta do presente.
-        </p>
-        <p className="quote">Não para assustar. Para esclarecer.</p>
-      </section>
+    <>
+      <header className="site-masthead" aria-label="Identidade do projeto">
+        <svg
+          className="brand-mark"
+          aria-hidden="true"
+          viewBox="0 0 24 32"
+          focusable="false"
+        >
+          <path d="M5 3h14M5 29h14M7 3c0 6 10 7 10 13S7 23 7 29M17 3c0 6-10 7-10 13s10 7 10 13" />
+        </svg>
+        <span className="brand-wordmark">Memento Mori</span>
+      </header>
 
-      <section className="workspace">
-        <BirthDateForm
-          errorMessage={errorMessage}
-          inputValue={birthDateInput}
-          onInputChange={handleInputChange}
-          onSubmit={handleSubmit}
-        />
+      <main
+        className={`page-shell ${visualization ? 'page-shell--result' : 'page-shell--initial'}`}
+      >
+        <section className="hero-panel">
+          <h1>Uma visualização estoica do tempo.</h1>
+          <p className="intro">
+            Insira sua data de nascimento para confrontar a finitude de seus
+            dias em uma grade tangível.
+          </p>
+        </section>
 
-        {visualization ? (
-          <section className="result-panel" aria-live="polite">
-            <div className="result-toolbar">
-              <div>
-                <p className="result-toolbar__label">Composição gerada</p>
-                <p className="result-toolbar__meta">
-                  {visualization.weeksLived} semanas completas vividas até{' '}
-                  {visualization.generatedAtLabel}
-                </p>
+        <section className="workspace">
+          <BirthDateForm
+            errorMessage={errorMessage}
+            inputValue={birthDateInput}
+            onInputChange={handleInputChange}
+            onSubmit={handleSubmit}
+          />
+
+          {visualization ? (
+            <section className="result-panel" aria-live="polite">
+              <div className="result-toolbar">
+                <div>
+                  <p className="result-toolbar__label">Composição gerada</p>
+                  <p className="result-toolbar__meta">
+                    {visualization.weeksLived} semanas completas vividas até{' '}
+                    {visualization.generatedAtLabel}
+                  </p>
+                </div>
+                <ExportButton
+                  downloadName={exportFileName}
+                  quote={selectedQuote}
+                  visualization={visualization}
+                />
               </div>
-              <ExportButton
-                downloadName={exportFileName}
-                quote={selectedQuote}
-                visualization={visualization}
-              />
-            </div>
 
-            <div className="wallpaper-preview">
-              <div className="wallpaper-preview__viewport">
-                <div className="wallpaper-preview__scale">
-                  <MobileWallpaperFrame
-                    quote={selectedQuote}
-                    visualization={visualization}
-                  />
+              <div className="wallpaper-preview">
+                <div className="wallpaper-preview__viewport">
+                  <div className="wallpaper-preview__scale">
+                    <MobileWallpaperFrame
+                      quote={selectedQuote}
+                      visualization={visualization}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <section className="concept-sections" aria-label="Leituras conceituais">
-              {CONCEPT_SECTIONS.map((section) => (
-                <article
-                  key={section.id}
-                  className="concept-card"
-                  id={section.id}
+              <div className="result-return">
+                <button
+                  className="button-secondary"
+                  type="button"
+                  onClick={handleReturnHome}
                 >
-                  <h2>{section.title}</h2>
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </article>
-              ))}
+                  Voltar
+                </button>
+              </div>
+
+              <section
+                className="concept-sections"
+                aria-label="Leituras conceituais"
+              >
+                {CONCEPT_SECTIONS.map((section) => (
+                  <article
+                    key={section.id}
+                    className="concept-card"
+                    id={section.id}
+                  >
+                    <h2>{section.title}</h2>
+                    {section.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </article>
+                ))}
+              </section>
             </section>
-          </section>
-        ) : (
-          <section className="empty-state" aria-live="polite">
-            <p>
-              Informe a data de nascimento para gerar o wallpaper final:
-              título, frase aleatória e grade de semanas em uma única
-              composição contemplativa.
-            </p>
-          </section>
-        )}
-      </section>
-    </main>
+          ) : (
+            <section className="empty-state" aria-live="polite">
+              <div className="editorial-rule" aria-hidden="true">
+                <span />
+              </div>
+            </section>
+          )}
+        </section>
+      </main>
+
+      <footer className="site-footer">
+        <p>
+          "Você poderia deixar a vida agora mesmo. Deixe que isso determine o
+          que você faz, diz e pensa." — Marco Aurélio
+        </p>
+        <small>Memento Mori. Reflexões estoicas sobre permanência.</small>
+      </footer>
+    </>
   )
 }
 

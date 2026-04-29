@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  font-family: 'Source Serif 4 Variable', Georgia, serif;
+  font-family: 'Newsreader Variable', Georgia, serif;
   font-synthesis: none;
   font-weight: 400;
   line-height: 1.5;
@@ -8,17 +8,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --tone-bg: #ebe2d2;
+  --tone-bg: #fff9ee;
   --tone-surface: #f6f0e6;
-  --tone-surface-soft: #fbf7ef;
-  --tone-ink: #2f2418;
-  --tone-ink-soft: #4f4131;
-  --tone-muted: #756451;
-  --tone-border: rgba(120, 98, 71, 0.18);
-  --tone-border-strong: rgba(120, 98, 71, 0.28);
+  --tone-surface-soft: #f9f3e9;
+  --tone-surface-deep: #ebe2d2;
+  --tone-ink: #1d1b16;
+  --tone-ink-soft: #4f453b;
+  --tone-muted: #81756a;
+  --tone-border: rgba(129, 117, 106, 0.24);
+  --tone-border-strong: rgba(29, 27, 22, 0.62);
   --tone-bronze: #8f6d43;
   --tone-bronze-soft: rgba(143, 109, 67, 0.48);
-  --tone-danger: #8c4e3f;
+  --tone-danger: #8c3f34;
 }
 
 * {
@@ -35,8 +36,14 @@ body {
   min-height: 100vh;
   color: var(--tone-ink);
   background:
-    radial-gradient(circle at top, rgba(255, 251, 242, 0.82), transparent 28%),
-    linear-gradient(180deg, #f2eadf 0%, #e8decd 48%, #dfd2be 100%);
+    repeating-linear-gradient(
+      0deg,
+      rgba(29, 27, 22, 0.018) 0,
+      rgba(29, 27, 22, 0.018) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    linear-gradient(180deg, #fff9ee 0%, #f6f0e6 58%, #ebe2d2 100%);
 }
 
 body::before {
@@ -45,11 +52,16 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)),
-    radial-gradient(circle at 20% 20%, rgba(114, 84, 51, 0.06), transparent 18%),
-    radial-gradient(circle at 80% 10%, rgba(114, 84, 51, 0.05), transparent 22%);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.24), transparent 16%, rgba(29, 27, 22, 0.02) 84%, transparent),
+    repeating-linear-gradient(
+      90deg,
+      rgba(120, 88, 48, 0.018) 0,
+      rgba(120, 88, 48, 0.018) 1px,
+      transparent 1px,
+      transparent 11px
+    );
   mix-blend-mode: multiply;
-  opacity: 0.78;
+  opacity: 0.54;
 }
 
 button,

@@ -44,4 +44,20 @@ describe('App', () => {
     expect(screen.getByTestId('side-marker-0')).toBeTruthy()
     expect(screen.getByTestId('side-marker-84')).toBeTruthy()
   })
+
+  it('returns from the generated view to the initial screen', async () => {
+    const user = userEvent.setup()
+
+    render(<App />)
+
+    await user.type(screen.getByLabelText('Data de nascimento'), '20/04/1990')
+    await user.click(screen.getByRole('button', { name: 'Gerar visualização' }))
+    await user.click(screen.getByRole('button', { name: 'Voltar' }))
+
+    expect(screen.queryByRole('button', { name: 'Exportar JPG Final' })).toBeNull()
+    expect(screen.getByRole('button', { name: 'Gerar visualização' })).toBeTruthy()
+    expect((screen.getByLabelText('Data de nascimento') as HTMLInputElement).value).toBe(
+      '',
+    )
+  })
 })
