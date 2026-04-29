@@ -1,207 +1,207 @@
 # AGENTS.md
 
-## Propósito
+## Norte do Projeto
 
-Este projeto deve resultar em uma aplicação web contemplativa e minimalista que recebe a data de nascimento do usuário e gera uma visualização das semanas de vida dessa pessoa até os 84 anos.
+Memento Mori é uma aplicação web contemplativa e minimalista. Ela recebe uma
+data de nascimento em `DD/MM/AAAA` e transforma essa data em uma composição
+visual das semanas de vida até os 84 anos.
 
-O produto final precisa oferecer, como saída principal, uma imagem exportável em `.jpeg` ou `.jpg`, escolhendo a variação com melhor resolução prática para preservar nitidez da grade e legibilidade dos marcadores.
+A saída principal é uma imagem exportável em `.jpg`/`.jpeg`, com nitidez
+suficiente para preservar grade, marcadores e tipografia. A exportação não é
+detalhe secundário: ela é o produto final.
 
-## Visão do Produto
+## Estado Atual da Aplicação
 
-A aplicação não deve parecer uma ferramenta corporativa, um dashboard ou um experimento visual futurista. Ela deve funcionar como uma peça de contemplação do tempo, com inspiração estética estoica romana.
+- Stack: React, TypeScript, Vite, date-fns, html-to-image, Vitest, Testing
+  Library e Playwright.
+- A experiência principal é um wallpaper mobile/exportável.
+- A grade tem `84` linhas por `52` colunas, totalizando `4.368` semanas.
+- A composição usa título `MEMENTO MORI`, frase estoica curta e marcadores
+  laterais a cada 7 anos.
+- O deploy recomendado é Cloudflare Pages.
 
-Referências conceituais:
-- sobriedade
-- contemplação
-- finitude
-- ordem
-- disciplina
-- silêncio visual
+## Prioridade de Trabalho
 
-Referências estéticas:
-- Marco Aurélio
-- Cícero
-- linguagem editorial clássica
-- materiais visuais que evoquem papel, pedra, bronze envelhecido e tinta discreta
+Ao decidir o que fazer primeiro, siga esta ordem:
 
-## Resultado Esperado
+1. Validar e processar corretamente a data de nascimento.
+2. Calcular corretamente as semanas vividas.
+3. Renderizar a grade completa de `84 x 52`.
+4. Preservar a linguagem visual minimalista, editorial e estoica.
+5. Garantir exportação JPG/JPEG nítida e fiel ao layout.
+6. Refinar responsividade e microdetalhes.
+7. Só então considerar qualquer melhoria secundária.
 
-Quando a aplicação estiver funcional, o fluxo ideal deve ser:
+## Regras de Domínio
 
-1. O usuário informa sua data de nascimento no formato `DD/MM/AAAA`.
-2. A aplicação valida a entrada.
-3. A aplicação calcula quantas semanas completas a pessoa já viveu até a data atual da execução.
-4. A aplicação constrói uma grade visual de `84 anos x 52 semanas`.
-5. Cada célula representa uma semana.
-6. Semanas vividas aparecem preenchidas.
-7. Semanas futuras aparecem vazias ou em contraste reduzido.
-8. A aplicação renderiza a visualização com marcações laterais a cada 7 anos.
-9. O usuário pode exportar o resultado como arquivo `.jpeg` ou `.jpg`.
-
-## Requisitos Funcionais
-
-### Entrada
-
-- Aceitar data de nascimento em `DD/MM/AAAA`.
+- Aceitar apenas data no formato `DD/MM/AAAA`.
 - Validar formato, existência da data e coerência temporal.
 - Impedir datas futuras.
-- Tratar mensagens de erro com tom discreto e claro.
-
-### Cálculo
-
-- Considerar `84 anos` como horizonte fixo da visualização.
-- Considerar `52 semanas por ano` como base visual uniforme.
-- Total visual esperado: `4368 células`.
-- O cálculo de semanas vividas deve ser real, usando a diferença entre a data atual e a data de nascimento.
-- A quantidade de semanas vividas pode ser calculada por `floor(dias_corridos / 7)`.
-- O preenchimento da grade deve respeitar o limite máximo visual de `4368` semanas.
-
-### Visualização
-
-- Organizar a grade em linhas por ano e colunas por semana.
-- Cada linha representa `1 ano`.
-- Cada linha contém `52 células`.
-- Exibir marcações laterais nos anos:
-  - `0`
-  - `7`
-  - `14`
-  - `21`
-  - `28`
-  - `35`
-  - `42`
-  - `49`
-  - `56`
-  - `63`
-  - `70`
-  - `77`
-  - `84`
-- Permitir destaque sutil do ano atual de vida.
-- Permitir destaque opcional da semana corrente com contorno fino, desde que não polua a composição.
-
-### Exportação
-
-- A aplicação deve gerar exportação em `.jpeg` ou `.jpg`.
-- A exportação deve priorizar alta nitidez da grade.
-- O agente que implementar a funcionalidade deve preferir resolução aumentada, por exemplo com `pixel ratio` superior ao padrão da tela.
-- O arquivo exportado deve preservar:
-  - proporção da composição
-  - contraste entre semanas vividas e futuras
-  - legibilidade de marcadores laterais
-  - legibilidade do título e subtítulo, se presentes
-- Se houver duas estratégias equivalentes, priorizar a que produzir melhor resolução visual com menor risco de artefatos.
+- Calcular semanas vividas com diferença real de dias:
+  `floor(dias_corridos / 7)`.
+- Usar horizonte fixo de `84 anos`.
+- Usar base visual uniforme de `52 semanas por ano`.
+- Limitar o preenchimento ao máximo visual de `4.368` semanas.
+- Manter marcadores laterais em:
+  `0`, `7`, `14`, `21`, `28`, `35`, `42`, `49`, `56`, `63`, `70`, `77`, `84`.
 
 ## Direção de UX
 
-- A tela inicial deve ser simples e centrada.
-- Deve haver um único campo principal para data de nascimento.
-- Deve haver um botão claro para gerar a visualização.
-- O resultado pode aparecer abaixo do formulário, sem mudar drasticamente o contexto da página.
-- A interface deve evitar excesso de texto explicativo.
-- O conteúdo textual deve ser breve, elegante e contemplativo.
+- Tela inicial simples, centrada e silenciosa.
+- Um único campo principal para a data de nascimento.
+- Um botão claro para gerar a visualização.
+- Resultado pode aparecer abaixo do formulário sem quebrar o contexto.
+- Texto curto, elegante e discreto.
+- Mensagens de erro devem ser claras, mas sem tom alarmista.
 
-Texto de apoio sugerido:
+Texto de apoio compatível:
 
 `A vida é composta de semanas; a virtude está em como se vive cada uma.`
 
 ## Direção Visual
 
-### O que perseguir
+Buscar:
 
-- minimalismo
-- elegância
-- sobriedade
-- aparência editorial
-- proporção rigorosa
-- sensação de peça gráfica contemplativa
+- sobriedade;
+- contemplação;
+- finitude;
+- ordem;
+- disciplina;
+- silêncio visual;
+- linguagem editorial clássica;
+- referências materiais de papel, pedra, bronze envelhecido e tinta discreta.
 
-### O que evitar
+Evitar:
 
-- visual futurista
-- neon
-- cores vibrantes
-- gradientes chamativos
-- sombras pesadas
-- ícones desnecessários
-- aparência infantil
-- aparência lúdica
-- aparência de dashboard SaaS
+- dashboard corporativo;
+- visual futurista;
+- neon;
+- cores vibrantes;
+- gradientes chamativos;
+- sombras pesadas;
+- excesso de ícones;
+- aparência infantil ou lúdica;
+- landing page promocional.
 
-### Paleta sugerida
+Paleta preferencial:
 
-- off-white
-- areia
-- pedra
-- carvão
-- bronze envelhecido
+- off-white;
+- areia;
+- pedra;
+- carvão;
+- bronze envelhecido.
 
-### Tipografia
+Tipografia:
 
-- Preferir tipografia com caráter clássico e sóbrio.
-- Evitar aparência excessivamente tecnológica.
+- Preferir serifas clássicas e sóbrias.
+- Evitar aparência tecnológica.
 - Usar poucos pesos e tamanhos.
-- Preservar excelente legibilidade da grade e dos marcadores.
+- Proteger legibilidade de título, frase, grade e marcadores.
 
-### Composição
+## Arquitetura Atual
 
-- Espaçamento generoso.
-- Linhas finas e discretas.
-- Forte organização geométrica.
-- Hierarquia visual contida.
-- A grade deve ser a protagonista.
+```text
+src/
+├── components/
+│   ├── BirthDateForm.tsx
+│   ├── ExportButton.tsx
+│   ├── LifeWeeksGrid.tsx
+│   ├── MobileWallpaperFrame.tsx
+│   ├── SideMarkers.tsx
+│   ├── WeekCell.tsx
+│   └── YearRow.tsx
+├── lib/
+│   ├── concepts.ts
+│   ├── life-weeks.ts
+│   ├── mobile-wallpaper.ts
+│   └── stoic-quotes.ts
+├── test/
+│   └── setup.ts
+├── App.tsx
+├── App.css
+├── index.css
+└── main.tsx
+```
 
-## Diretrizes Técnicas
+Responsabilidades:
 
-- Preferir implementação em React.
-- Manter arquitetura simples e modular.
-- Priorizar desktop, sem abandonar responsividade.
-- Garantir boa leitura mesmo com grande quantidade de células.
-- Preferir `CSS Grid` para a grade principal.
-- Evitar bibliotecas pesadas quando possível.
+- `src/lib/life-weeks.ts`: parsing, validação, cálculo e matriz da grade.
+- `src/lib/mobile-wallpaper.ts`: preset visual da composição exportável.
+- `src/components/MobileWallpaperFrame.tsx`: superfície final de preview/export.
+- `src/components/ExportButton.tsx`: geração do JPG.
+- `src/App.tsx`: orquestração da experiência.
+- `src/App.css`: linguagem visual principal.
 
-Estrutura sugerida:
-- `App`
-- `BirthDateForm`
-- `LifeWeeksGrid`
-- `YearRow`
-- `WeekCell`
-- `SideMarkers`
-- `ExportButton`
+## Exportação
 
-## Regras de Implementação para Agentes
+Ao mexer na exportação:
 
-- Preservar a experiência contemplativa acima de efeitos visuais chamativos.
-- Não adicionar features paralelas antes de concluir o fluxo principal.
-- Tratar a exportação da imagem como parte central do produto, não como detalhe secundário.
-- Garantir que a imagem gerada seja fiel ao layout exibido na interface.
-- Sempre validar a data antes de processar a grade.
-- Manter o código limpo, legível e modular.
-- Favorecer soluções previsíveis e fáceis de manter.
+- preservar o uso da mesma composição visual da prévia;
+- manter fundo explícito no JPG;
+- preferir `pixelRatio` acima do padrão da tela;
+- validar título, frase, grade e marcadores no arquivo gerado;
+- evitar soluções que dependam de screenshot manual;
+- não trocar formato final para PNG sem pedido explícito.
 
-## Ordem de Prioridade
+## Testes Esperados
 
-Ao trabalhar neste projeto, seguir esta ordem:
+Use:
 
-1. Validar e processar corretamente a data de nascimento.
-2. Calcular corretamente as semanas vividas.
-3. Renderizar corretamente a grade de `84 x 52`.
-4. Aplicar a linguagem visual minimalista e estoica.
-5. Implementar exportação em `.jpeg/.jpg` com boa resolução.
-6. Refinar responsividade, microdetalhes e polimento.
+```bash
+npm run lint
+npm run test
+npm run build
+```
+
+Use também:
+
+```bash
+npm run test:e2e
+```
+
+quando alterar fluxo principal, layout renderizado, formulário, exportação ou
+comportamento de navegador.
+
+Mudanças em `life-weeks.ts` devem ter testes unitários. Mudanças na exportação
+devem considerar testes em `ExportButton.test.tsx` e validação visual/manual
+quando necessário.
+
+## Organização e Limpeza
+
+- A raiz deve conter apenas configuração, entrada do app, documentação principal
+  e arquivos necessários de publicação.
+- Artefatos gerados localmente não devem ser versionados: `dist`,
+  `test-results`, `playwright-report`, `.wrangler`, `.tmp-*`, `.DS_Store`.
+- Referências históricas e exploração visual pertencem a `docs/archive`.
+- Guias operacionais pertencem a `docs/deployment` ou outra subpasta clara de
+  `docs`.
+- Não recriar scripts exploratórios no runtime do projeto sem necessidade
+  explícita.
+- Antes de remover arquivo versionado, confirme se ele é código runtime,
+  documentação viva ou material histórico. Material histórico útil deve ser
+  arquivado, não descartado.
+
+## Regras para Futuras Tarefas
+
+- Preserve mudanças existentes no worktree que não foram feitas por você.
+- Prefira alterações pequenas, previsíveis e alinhadas ao padrão atual.
+- Não adicione bibliotecas pesadas para resolver problemas simples.
+- Não crie abstrações novas sem ganho claro de legibilidade ou manutenção.
+- Evite features paralelas antes de fechar o fluxo principal.
+- Se alterar estrutura de pastas, atualize README, imports, scripts e testes.
+- Se alterar deploy, atualize `docs/deployment/cloudflare-pages.md`.
+- Se alterar a visão de produto, atualize este arquivo e o README.
 
 ## Critérios de Aceitação
 
-Uma implementação será considerada aderente quando:
+Uma entrega aderente deve garantir:
 
-- a data de nascimento for validada corretamente
-- a quantidade de semanas vividas refletir a data atual da execução
-- a grade de 84 anos estiver completa e uniforme
-- as semanas vividas estiverem visivelmente preenchidas
-- as semanas futuras estiverem visualmente distintas
-- houver marcações laterais a cada 7 anos
-- a interface mantiver tom sóbrio, clássico e minimalista
-- o usuário conseguir exportar a composição em `.jpeg` ou `.jpg`
-- o arquivo exportado tiver nitidez suficiente para leitura confortável
-
-## Resumo Operacional
-
-Este projeto deve ser tratado como uma aplicação web de contemplação do tempo. O núcleo do produto é a transformação de uma data de nascimento em uma imagem elegante, silenciosa e precisa da vida em semanas, limitada a 84 anos, com exportação final em formato `.jpeg` ou `.jpg`.
+- data validada corretamente;
+- semanas vividas coerentes com a data atual de execução;
+- grade uniforme com `84 x 52`;
+- semanas vividas e futuras visualmente distintas;
+- marcadores laterais a cada 7 anos;
+- interface sóbria, clássica e minimalista;
+- exportação `.jpg`/`.jpeg` funcional;
+- arquivo exportado com nitidez confortável;
+- documentação atualizada quando houver mudança estrutural.

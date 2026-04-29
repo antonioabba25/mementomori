@@ -1,11 +1,26 @@
 # Memento Mori
 
-Aplicação web contemplativa que recebe a data de nascimento do usuário e gera
-uma composição visual com todas as semanas de vida até os 84 anos.
+Aplicação web contemplativa que transforma uma data de nascimento em uma peça
+visual das semanas de vida até os 84 anos. A experiência é deliberadamente
+simples: o usuário informa a data, a aplicação valida a entrada, calcula as
+semanas completas já vividas e gera uma composição exportável em JPG.
 
-O produto final da interface e da exportação é uma única composição pensada
-como wallpaper mobile: título `MEMENTO MORI`, uma frase estoica aleatória e a
-grade de `84 x 52` semanas.
+O produto não é um dashboard. Ele deve parecer uma peça editorial silenciosa,
+com inspiração estoica romana, materiais discretos e foco absoluto na grade de
+`84 x 52` semanas.
+
+## Estado Atual
+
+- Fluxo principal em React + TypeScript.
+- Entrada única no formato `DD/MM/AAAA`.
+- Validação de data inexistente, formato inválido e data futura.
+- Cálculo real por dias corridos, usando `floor(dias / 7)`.
+- Grade visual com `4.368` células.
+- Marcadores laterais a cada 7 anos.
+- Exportação JPG por `html-to-image`, com `pixelRatio` elevado para preservar
+  nitidez.
+- Preset visual mobile/wallpaper como saída final.
+- Deploy preparado para Cloudflare Pages.
 
 ## Stack
 
@@ -14,87 +29,155 @@ grade de `84 x 52` semanas.
 - Vite 8
 - date-fns
 - html-to-image
+- Newsreader via `@fontsource-variable/newsreader`
 - Vitest + Testing Library
 - Playwright
+- Cloudflare Pages/Wrangler para publicação opcional
 
 ## Scripts
 
 ```bash
 npm install
 npm run dev
-npm run build
+npm run lint
 npm run test
+npm run test:e2e
+npm run build
+```
+
+Scripts de publicação:
+
+```bash
+npm run preview
+npm run preview:cloudflare
+npm run deploy:cloudflare
+```
+
+## Fluxo do Produto
+
+1. O usuário informa a data de nascimento em `DD/MM/AAAA`.
+2. A aplicação valida formato, existência da data e coerência temporal.
+3. A aplicação calcula semanas completas vividas até o dia atual.
+4. Uma frase estoica curta é sorteada.
+5. A composição final é renderizada com título, frase, grade e marcadores.
+6. O usuário exporta a composição em `.jpg`.
+
+## Estrutura do Projeto
+
+```text
+.
+├── docs/
+│   ├── archive/                 # Referências históricas e explorações visuais
+│   └── deployment/              # Guias de publicação
+├── e2e/                         # Testes Playwright
+├── public/                      # Arquivos estáticos e headers do Pages
+├── src/
+│   ├── components/              # Componentes de UI e composição visual
+│   ├── lib/                     # Regras de negócio, conteúdo e presets
+│   ├── test/                    # Setup de testes unitários
+│   ├── App.tsx                  # Orquestração do fluxo
+│   ├── App.css                  # Linguagem visual principal
+│   └── main.tsx                 # Bootstrap do React
+└── wrangler.toml                # Configuração do Cloudflare Pages
+```
+
+## Pontos Principais do Código
+
+- [src/App.tsx](src/App.tsx): controla estado do formulário, validação,
+  visualização gerada, frase sorteada e retorno ao estado inicial.
+- [src/lib/life-weeks.ts](src/lib/life-weeks.ts): concentra a regra de negócio
+  mais importante do projeto: parsing, validação, cálculo de semanas e montagem
+  da matriz de anos/semanas.
+- [src/components/BirthDateForm.tsx](src/components/BirthDateForm.tsx):
+  formulário único de entrada.
+- [src/components/MobileWallpaperFrame.tsx](src/components/MobileWallpaperFrame.tsx):
+  enquadramento final usado tanto na prévia quanto na exportação.
+- [src/components/LifeWeeksGrid.tsx](src/components/LifeWeeksGrid.tsx):
+  renderização da composição visual e da grade.
+- [src/components/ExportButton.tsx](src/components/ExportButton.tsx):
+  exportação JPG a partir de uma superfície de renderização dedicada.
+- [src/lib/mobile-wallpaper.ts](src/lib/mobile-wallpaper.ts): preset de
+  dimensões, escala e estilo do wallpaper.
+- [src/lib/stoic-quotes.ts](src/lib/stoic-quotes.ts): repositório de frases.
+- [src/lib/concepts.ts](src/lib/concepts.ts): textos conceituais exibidos após
+  a geração.
+
+## Regras de Domínio
+
+- Horizonte fixo: `84 anos`.
+- Base visual: `52 semanas por ano`.
+- Total visual: `84 * 52 = 4.368` células.
+- Semanas vividas: `floor(dias_corridos / 7)`.
+- O preenchimento nunca deve ultrapassar `4.368` semanas.
+- A grade deve permanecer organizada em `84` linhas e `52` colunas.
+- A data atual deve ser obtida no momento da execução, não fixada em código de
+  produção.
+
+## Exportação
+
+A exportação é parte central do produto. O botão de exportação renderiza uma
+instância dedicada da composição e gera um JPG com:
+
+- dimensões definidas no preset visual;
+- `pixelRatio` elevado;
+- fundo explícito para evitar transparência;
+- qualidade alta;
+- mesma composição vista na prévia.
+
+Ao alterar layout, tipografia, escala ou grade, valide a exportação além da
+interface em tela.
+
+## Testes e Validação
+
+Antes de publicar ou considerar uma mudança pronta, rode:
+
+```bash
+npm run lint
+npm run test
+npm run build
+```
+
+Quando a mudança afetar fluxo do usuário, formulário, exportação ou layout
+responsivo, rode também:
+
+```bash
 npm run test:e2e
 ```
 
-## Fluxo do produto
+Cobertura atual:
 
-1. Informar a data de nascimento em `DD/MM/AAAA`.
-2. Validar formato, existência da data e datas futuras.
-3. Calcular semanas completas vividas até a data atual.
-4. Sortear uma frase curta do repositório estoico.
-5. Renderizar a composição final com:
-   `MEMENTO MORI`, frase, grade de semanas e marcadores laterais.
-6. Exportar o resultado em `.jpg` com preset único para mobile.
+- `src/lib/life-weeks.test.ts`: validação e cálculo de semanas.
+- `src/App.test.tsx`: fluxo principal da interface.
+- `src/components/ExportButton.test.tsx`: comportamento de exportação.
+- `e2e/app.spec.ts`: fluxo integrado via navegador.
 
-## Como o código está organizado
+## Publicação
 
-### 1. Orquestração da tela
+A publicação recomendada é pelo Cloudflare Pages como site estático Vite.
 
-- [src/App.tsx](src/App.tsx)
-  Controla a entrada de data, o estado de erro, a frase sorteada e o momento em
-  que a composição final aparece.
+Configuração esperada:
 
-### 2. Regras de negócio do tempo
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Root directory: `/`
+- Environment variable: `NODE_VERSION=22`
 
-- [src/lib/life-weeks.ts](src/lib/life-weeks.ts)
-  Concentra a lógica que realmente importa para o domínio:
-  validação da data, cálculo de semanas vividas, deslocamento da semana de
-  nascimento e montagem da grade `84 x 52`.
+Guia completo: [docs/deployment/cloudflare-pages.md](docs/deployment/cloudflare-pages.md).
 
-### 3. Composição visual final
+## Arquivo e Referências
 
-- [src/components/MobileWallpaperFrame.tsx](src/components/MobileWallpaperFrame.tsx)
-  É o enquadramento do wallpaper.
-- [src/components/LifeWeeksGrid.tsx](src/components/LifeWeeksGrid.tsx)
-  Renderiza o título, a frase e a grade.
-- [src/components/ExportButton.tsx](src/components/ExportButton.tsx)
-  Gera o JPG a partir da mesma composição usada na prévia.
+Materiais que ajudaram a formar a direção visual e conceitual ficam fora da raiz
+do projeto, em [docs/archive](docs/archive). Eles não fazem parte do runtime da
+aplicação.
 
-### 4. Conteúdo e configuração
+Use o arquivo apenas como referência histórica. Não reintroduza assets ou scripts
+exploratórios no fluxo principal sem uma justificativa clara.
 
-- [src/lib/mobile-wallpaper.ts](src/lib/mobile-wallpaper.ts)
-  Guarda o preset visual do wallpaper final.
-- [src/lib/stoic-quotes.ts](src/lib/stoic-quotes.ts)
-  Repositório das frases aleatórias.
-- [src/lib/concepts.ts](src/lib/concepts.ts)
-  Textos explicativos exibidos ao final da tela depois que a composição é gerada.
+## Manutenção
 
-## Ideia central da arquitetura
-
-O projeto tenta separar bem três responsabilidades:
-
-1. Regra de negócio:
-   calcular corretamente o tempo vivido.
-2. Composição:
-   transformar esse cálculo em uma peça gráfica contemplativa.
-3. Conteúdo:
-   manter frases, textos conceituais e preset visual fora do componente principal.
-
-Essa divisão deixa a manutenção mais simples: quando for preciso mexer em texto,
-visual ou cálculo, cada parte já tem um lugar previsível.
-
-## Validação
-
-Os testes cobrem:
-
-- validação e cálculo em `src/lib/life-weeks.test.ts`
-- fluxo principal da interface em `src/App.test.tsx`
-- exportação do JPG em `src/components/ExportButton.test.tsx`
-
-Antes de publicar alterações, rode:
-
-```bash
-npm run test
-npm run build
-```
+- Mantenha a raiz do projeto enxuta.
+- Não versione `dist`, relatórios de teste, caches locais ou saídas temporárias.
+- Preserve a linguagem visual sóbria: off-white, areia, pedra, carvão e bronze
+  envelhecido.
+- Evite features paralelas antes de proteger o fluxo principal.
+- Mudanças em cálculo, grade ou exportação devem vir acompanhadas de testes.

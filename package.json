@@ -6,16 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "generate:mobile-explorations": "node scripts/generate-mobile-explorations.mjs",
+    "deploy:cloudflare": "npm run build && npx --yes wrangler@latest pages deploy dist --project-name=mementomori",
     "lint": "eslint .",
     "preview": "vite preview",
+    "preview:cloudflare": "npm run build && npx --yes wrangler@latest pages dev dist",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test"
   },
   "dependencies": {
     "@fontsource-variable/newsreader": "^5.2.10",
-    "@fontsource-variable/source-serif-4": "^5.2.9",
     "date-fns": "^4.1.0",
     "html-to-image": "^1.11.13",
     "react": "^19.2.5",
