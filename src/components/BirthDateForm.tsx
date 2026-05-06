@@ -29,8 +29,8 @@ export function BirthDateForm({
             type="text"
             inputMode="numeric"
             autoComplete="bday"
-            maxLength={10}
-            placeholder="DD/MM/AAAA"
+            maxLength={8}
+            placeholder="DDMMAAAA"
             value={inputValue}
             onChange={(event) => onInputChange(event.target.value)}
             aria-invalid={errorMessage ? 'true' : 'false'}

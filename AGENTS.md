@@ -3,7 +3,7 @@
 ## Norte do Projeto
 
 Memento Mori é uma aplicação web contemplativa e minimalista. Ela recebe uma
-data de nascimento em `DD/MM/AAAA` e transforma essa data em uma composição
+data de nascimento em `DDMMAAAA` e transforma essa data em uma composição
 visual das semanas de vida até os 84 anos.
 
 A saída principal é uma imagem exportável em `.jpg`/`.jpeg`, com nitidez
@@ -34,7 +34,7 @@ Ao decidir o que fazer primeiro, siga esta ordem:
 
 ## Regras de Domínio
 
-- Aceitar apenas data no formato `DD/MM/AAAA`.
+- Aceitar apenas data no formato `DDMMAAAA`, sem barras.
 - Validar formato, existência da data e coerência temporal.
 - Impedir datas futuras.
 - Calcular semanas vividas com diferença real de dias:

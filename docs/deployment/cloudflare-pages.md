@@ -64,7 +64,7 @@ Cloudflare.
 Depois do primeiro deploy, valide:
 
 - A URL `*.pages.dev` abre a aplicacao.
-- A data de nascimento aceita o formato `DD/MM/AAAA`.
+- A data de nascimento aceita o formato `DDMMAAAA`, sem barras.
 - Datas invalidas e futuras mostram erro discreto.
 - A grade de semanas e renderizada por completo.
 - A exportacao gera um arquivo `.jpg`.

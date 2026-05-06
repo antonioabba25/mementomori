@@ -10,14 +10,23 @@ import {
 } from './life-weeks'
 
 describe('validateBirthDateInput', () => {
-  it('accepts a valid birth date in DD/MM/AAAA', () => {
-    const result = validateBirthDateInput('20/04/1990', new Date(2026, 3, 20))
+  it('accepts a valid birth date in DDMMAAAA', () => {
+    const result = validateBirthDateInput('20041990', new Date(2026, 3, 20))
 
     expect(result.ok).toBe(true)
   })
 
+  it('rejects birth dates typed with separators', () => {
+    const result = validateBirthDateInput('20/04/1990', new Date(2026, 3, 20))
+
+    expect(result).toEqual({
+      ok: false,
+      error: 'Informe a data no formato DDMMAAAA.',
+    })
+  })
+
   it('rejects dates that do not exist', () => {
-    const result = validateBirthDateInput('31/02/1990', new Date(2026, 3, 20))
+    const result = validateBirthDateInput('31021990', new Date(2026, 3, 20))
 
     expect(result).toEqual({
       ok: false,
@@ -26,7 +35,7 @@ describe('validateBirthDateInput', () => {
   })
 
   it('rejects future birth dates', () => {
-    const result = validateBirthDateInput('21/04/2026', new Date(2026, 3, 20))
+    const result = validateBirthDateInput('21042026', new Date(2026, 3, 20))
 
     expect(result).toEqual({
       ok: false,
@@ -78,7 +87,7 @@ describe('buildLifeGrid', () => {
 
 describe('createLifeVisualization', () => {
   it('builds the full visualization payload for the interface', () => {
-    const result = createLifeVisualization('20/04/1990', new Date(2026, 3, 20))
+    const result = createLifeVisualization('20041990', new Date(2026, 3, 20))
 
     expect(result.ok).toBe(true)
 
@@ -93,7 +102,7 @@ describe('createLifeVisualization', () => {
   it('places a march birth inside the first row instead of filling from january', () => {
     const birthDate = new Date(1989, 2, 15)
     const birthWeekOffset = calculateBirthWeekOffset(birthDate)
-    const result = createLifeVisualization('15/03/1989', new Date(1989, 3, 5))
+    const result = createLifeVisualization('15031989', new Date(1989, 3, 5))
 
     expect(result.ok).toBe(true)
 
@@ -113,7 +122,7 @@ describe('createLifeVisualization', () => {
   it('keeps a late december birth legible at the year transition', () => {
     const birthDate = new Date(1990, 11, 31)
     const birthWeekOffset = calculateBirthWeekOffset(birthDate)
-    const result = createLifeVisualization('31/12/1990', new Date(1991, 0, 14))
+    const result = createLifeVisualization('31121990', new Date(1991, 0, 14))
 
     expect(result.ok).toBe(true)
 

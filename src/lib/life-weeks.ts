@@ -11,7 +11,7 @@ export const VISUAL_YEARS = 84
 export const VISUAL_WEEKS_PER_YEAR = 52
 export const VISUAL_TOTAL_WEEKS = VISUAL_YEARS * VISUAL_WEEKS_PER_YEAR
 
-const BIRTH_DATE_PATTERN = /^\d{2}\/\d{2}\/\d{4}$/
+const BIRTH_DATE_PATTERN = /^\d{8}$/
 
 export type WeekState = 'empty' | 'lived'
 
@@ -84,13 +84,13 @@ export function validateBirthDateInput(
   if (!BIRTH_DATE_PATTERN.test(normalizedInput)) {
     return {
       ok: false,
-      error: 'Informe a data no formato DD/MM/AAAA.',
+      error: 'Informe a data no formato DDMMAAAA.',
     }
   }
 
-  const parsedDate = parse(normalizedInput, 'dd/MM/yyyy', new Date())
+  const parsedDate = parse(normalizedInput, 'ddMMyyyy', new Date())
 
-  if (!isValid(parsedDate) || formatBirthDate(parsedDate) !== normalizedInput) {
+  if (!isValid(parsedDate) || format(parsedDate, 'ddMMyyyy') !== normalizedInput) {
     return {
       ok: false,
       error: 'Essa data não existe.',

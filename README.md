@@ -12,7 +12,7 @@ com inspiração estoica romana, materiais discretos e foco absoluto na grade de
 ## Estado Atual
 
 - Fluxo principal em React + TypeScript.
-- Entrada única no formato `DD/MM/AAAA`.
+- Entrada única no formato `DDMMAAAA`, sem barras.
 - Validação de data inexistente, formato inválido e data futura.
 - Cálculo real por dias corridos, usando `floor(dias / 7)`.
 - Grade visual com `4.368` células.
@@ -55,7 +55,7 @@ npm run deploy:cloudflare
 
 ## Fluxo do Produto
 
-1. O usuário informa a data de nascimento em `DD/MM/AAAA`.
+1. O usuário informa a data de nascimento em `DDMMAAAA`.
 2. A aplicação valida formato, existência da data e coerência temporal.
 3. A aplicação calcula semanas completas vividas até o dia atual.
 4. Uma frase estoica curta é sorteada.

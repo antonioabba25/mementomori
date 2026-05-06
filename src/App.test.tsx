@@ -9,7 +9,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await user.type(screen.getByLabelText('Data de nascimento'), '99/99/9999')
+    await user.type(screen.getByLabelText('Data de nascimento'), '99999999')
     await user.click(screen.getByRole('button', { name: 'Gerar visualização' }))
 
     expect(screen.getByRole('alert').textContent).toContain(
@@ -26,7 +26,7 @@ describe('App', () => {
       screen.queryByRole('heading', { name: 'As 7 idades do homem' }),
     ).toBeNull()
 
-    await user.type(screen.getByLabelText('Data de nascimento'), '20/04/1990')
+    await user.type(screen.getByLabelText('Data de nascimento'), '20041990')
     await user.click(screen.getByRole('button', { name: 'Gerar visualização' }))
 
     expect(
@@ -52,7 +52,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await user.type(screen.getByLabelText('Data de nascimento'), '20/04/1990')
+    await user.type(screen.getByLabelText('Data de nascimento'), '20041990')
     await user.click(screen.getByRole('button', { name: 'Gerar visualização' }))
     await user.click(screen.getByRole('button', { name: 'Voltar' }))
 

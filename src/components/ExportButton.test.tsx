@@ -20,7 +20,7 @@ describe('ExportButton', () => {
   it('exports the single final mobile wallpaper preset', async () => {
     const user = userEvent.setup()
     const visualizationResult = createLifeVisualization(
-      '20/03/1989',
+      '20031989',
       new Date(2026, 3, 20),
     )
 
