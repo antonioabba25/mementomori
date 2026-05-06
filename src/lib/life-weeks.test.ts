@@ -109,4 +109,26 @@ describe('createLifeVisualization', () => {
     ).toBe(true)
     expect(result.visualization.rows[0].weeks[birthWeekOffset].state).toBe('lived')
   })
+
+  it('keeps a late december birth legible at the year transition', () => {
+    const birthDate = new Date(1990, 11, 31)
+    const birthWeekOffset = calculateBirthWeekOffset(birthDate)
+    const result = createLifeVisualization('31/12/1990', new Date(1991, 0, 14))
+
+    expect(result.ok).toBe(true)
+
+    if (!result.ok) {
+      throw new Error('Visualization should have been created')
+    }
+
+    expect(birthWeekOffset).toBe(VISUAL_WEEKS_PER_YEAR - 1)
+    expect(
+      result.visualization.rows[0].weeks
+        .slice(0, birthWeekOffset)
+        .every((week) => week.state === 'empty'),
+    ).toBe(true)
+    expect(result.visualization.rows[0].weeks[51].state).toBe('lived')
+    expect(result.visualization.rows[1].weeks[0].state).toBe('lived')
+    expect(result.visualization.rows[1].weeks[1].isCurrentWeek).toBe(true)
+  })
 })

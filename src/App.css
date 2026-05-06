@@ -314,6 +314,7 @@
 }
 
 .wallpaper-frame {
+  position: relative;
   overflow: hidden;
   background:
     repeating-linear-gradient(
@@ -327,6 +328,8 @@
 }
 
 .wallpaper-frame__safe-area {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   display: flex;
@@ -336,13 +339,9 @@
 }
 
 .wallpaper-frame__content-frame {
+  position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: var(--widget-safe-top, 0);
-  padding-bottom: var(--widget-safe-bottom, 0);
 }
 
 .wallpaper-frame .life-composition {
@@ -391,20 +390,25 @@
 }
 
 .life-composition--widget {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  padding: 22px 0 18px;
+  height: 100%;
+  padding: 0;
   border: none;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  transform:
-    translateY(var(--widget-content-offset-y, 0))
-    scale(var(--widget-content-scale, 1));
-  transform-origin: center top;
+  transform: none;
 }
 
 .life-composition--widget .composition-header {
-  padding-bottom: 22px;
+  position: absolute;
+  top: var(--widget-header-center-y, 113px);
+  left: 50%;
+  width: min(100%, var(--widget-quote-max-width, 760px));
+  padding-bottom: 0;
+  transform: translate(-50%, -50%);
 }
 
 .life-composition--widget .composition-header h2 {
@@ -416,22 +420,40 @@
 .life-composition--widget .composition-quote {
   max-width: var(--widget-quote-max-width, 760px);
   margin-top: var(--widget-quote-margin-top, 22px);
-  margin-bottom: var(--widget-quote-margin-bottom, 38px);
+  margin-bottom: 0;
   color: rgba(79, 69, 59, 0.9);
   font-size: var(--widget-quote-font-size, 31px);
   line-height: 1.36;
 }
 
+.life-composition--widget .life-grid {
+  position: absolute;
+  top: var(--widget-grid-top, 267px);
+  left: 50%;
+  width: calc(var(--widget-grid-width, 100%) * 0.96);
+  transform: translateX(-50%);
+}
+
 .life-composition--widget .year-row {
-  grid-template-columns: var(--widget-marker-column, 94px) minmax(0, 1fr);
+  grid-template-columns:
+    var(--widget-marker-column, 94px)
+    minmax(0, 1fr)
+    var(--widget-marker-column, 94px);
   gap: var(--widget-row-gap, 14px);
   padding: 0;
 }
 
 .life-composition--widget .year-row__marker {
-  padding-right: var(--widget-marker-padding-right, 20px);
   font-size: var(--widget-marker-font-size, 28px);
   line-height: 1;
+}
+
+.life-composition--widget .year-row__marker--left {
+  padding-right: var(--widget-marker-padding-right, 20px);
+}
+
+.life-composition--widget .year-row__marker--right {
+  padding-left: var(--widget-marker-padding-right, 20px);
 }
 
 .life-composition--widget .year-row__weeks {
@@ -446,7 +468,10 @@
 }
 
 .life-composition--widget .life-grid__footer {
-  grid-template-columns: var(--widget-marker-column, 94px) minmax(0, 1fr);
+  grid-template-columns:
+    var(--widget-marker-column, 94px)
+    minmax(0, 1fr)
+    var(--widget-marker-column, 94px);
   gap: var(--widget-row-gap, 14px);
   padding-top: 6px;
 }
@@ -457,7 +482,7 @@
 
 .year-row {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
+  grid-template-columns: 56px minmax(0, 1fr) 56px;
   gap: 14px;
   align-items: center;
   padding: 1px 0;
@@ -468,29 +493,52 @@
   align-self: stretch;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding-right: 10px;
   color: var(--tone-muted);
   font-size: 0.84rem;
   font-variant-numeric: tabular-nums;
 }
 
-.year-row__marker::after {
+.year-row__marker--left {
+  justify-content: flex-end;
+  padding-right: 10px;
+  text-align: right;
+}
+
+.year-row__marker--right {
+  justify-content: flex-start;
+  padding-left: 10px;
+  text-align: left;
+}
+
+.year-row__marker--left::after,
+.year-row__marker--right::before {
   content: '';
   position: absolute;
   top: 0;
-  right: 0;
   width: 1px;
   height: 100%;
-  background: var(--tone-border);
+  background: rgba(143, 109, 67, 0.12);
+}
+
+.year-row__marker--left::after {
+  right: 0;
+}
+
+.year-row__marker--right::before {
+  left: 0;
 }
 
 .year-row__marker[data-milestone='true'] {
   color: var(--tone-bronze);
 }
 
-.year-row__marker[data-milestone='true']::after {
-  background: var(--tone-bronze-soft);
+.year-row__marker--right[data-milestone='true'] {
+  color: rgba(143, 109, 67, 0.68);
+}
+
+.year-row__marker--left[data-milestone='true']::after,
+.year-row__marker--right[data-milestone='true']::before {
+  background: rgba(143, 109, 67, 0.24);
 }
 
 .year-row__track {
@@ -531,7 +579,7 @@
 
 .life-grid__footer {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
+  grid-template-columns: 56px minmax(0, 1fr) 56px;
   gap: 14px;
   align-items: start;
   padding-top: 8px;

@@ -3,16 +3,17 @@ import { SideMarkers } from './SideMarkers'
 import { WeekCell } from './WeekCell'
 
 interface YearRowProps {
+  calendarYear: number
   row: LifeYearRow
 }
 
-export function YearRow({ row }: YearRowProps) {
+export function YearRow({ calendarYear, row }: YearRowProps) {
   return (
     <div
       className="year-row"
       data-current-year={row.isCurrentYear ? 'true' : 'false'}
     >
-      <SideMarkers value={row.yearIndex} visible={row.isMilestone} />
+      <SideMarkers side="left" value={row.yearIndex} visible={row.isMilestone} />
 
       <div className="year-row__track">
         <div className="year-row__weeks">
@@ -21,6 +22,13 @@ export function YearRow({ row }: YearRowProps) {
           ))}
         </div>
       </div>
+
+      <SideMarkers
+        side="right"
+        testIdPrefix="calendar-marker"
+        value={calendarYear}
+        visible={row.isMilestone}
+      />
     </div>
   )
 }

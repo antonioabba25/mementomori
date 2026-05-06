@@ -43,6 +43,8 @@ describe('App', () => {
     ).toBeTruthy()
     expect(screen.getByTestId('side-marker-0')).toBeTruthy()
     expect(screen.getByTestId('side-marker-84')).toBeTruthy()
+    expect(screen.getByTestId('calendar-marker-1990')).toBeTruthy()
+    expect(screen.getByTestId('calendar-marker-2074')).toBeTruthy()
   })
 
   it('returns from the generated view to the initial screen', async () => {

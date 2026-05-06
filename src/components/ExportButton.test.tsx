@@ -32,6 +32,7 @@ describe('ExportButton', () => {
       const stage = args[0] as HTMLElement
 
       expect(stage.getAttribute('data-export-stage')).toBe('iphone16-widget-90')
+      expect(stage.querySelector('.document-ruler')).toBeNull()
       expect(stage.querySelector('.life-composition--widget')).toBeTruthy()
       expect(stage.textContent).toContain('MEMENTO MORI')
       expect(stage.textContent).toContain('O tempo não negocia com distrações.')

@@ -40,10 +40,10 @@ export const MOBILE_WIDGET_PRESET: MobileWallpaperPreset = {
   safeBottomRatio: 0.176,
   contentScale: 0.885,
   contentOffsetY: -108,
-  markerColumn: 94,
-  markerFontSize: 30,
-  markerPaddingRight: 20,
-  rowGap: 14,
+  markerColumn: 78,
+  markerFontSize: 16,
+  markerPaddingRight: 12,
+  rowGap: 12,
   cellGap: 2,
   titleFontSize: 46,
   titleLetterSpacing: 12,
@@ -57,14 +57,33 @@ export const MOBILE_WIDGET_PRESET: MobileWallpaperPreset = {
 export function getMobileWallpaperFrameStyle(
   preset: MobileWallpaperPreset = MOBILE_WIDGET_PRESET,
 ): CSSProperties {
+  const framePaddingTop = Math.round(preset.frameHeight * preset.topInsetRatio)
+  const framePaddingRight = Math.round(preset.frameWidth * preset.sideInsetRatio)
+  const framePaddingBottom = Math.round(
+    preset.frameHeight * preset.bottomInsetRatio,
+  )
+  const framePaddingLeft = Math.round(preset.frameWidth * preset.sideInsetRatio)
+  const layoutRowHeight = preset.frameHeight / 28
+
   return {
     width: `${preset.frameWidth}px`,
     height: `${preset.frameHeight}px`,
     boxSizing: 'border-box',
-    paddingTop: `${Math.round(preset.frameHeight * preset.topInsetRatio)}px`,
-    paddingRight: `${Math.round(preset.frameWidth * preset.sideInsetRatio)}px`,
-    paddingBottom: `${Math.round(preset.frameHeight * preset.bottomInsetRatio)}px`,
-    paddingLeft: `${Math.round(preset.frameWidth * preset.sideInsetRatio)}px`,
+    paddingTop: `${framePaddingTop}px`,
+    paddingRight: `${framePaddingRight}px`,
+    paddingBottom: `${framePaddingBottom}px`,
+    paddingLeft: `${framePaddingLeft}px`,
+    ['--widget-frame-height' as string]: `${preset.frameHeight}px`,
+    ['--widget-frame-width' as string]: `${preset.frameWidth}px`,
+    ['--widget-grid-top' as string]: `${Math.round(
+      layoutRowHeight * 4 - framePaddingTop,
+    )}px`,
+    ['--widget-grid-width' as string]: `${
+      preset.frameWidth - framePaddingLeft - framePaddingRight
+    }px`,
+    ['--widget-header-center-y' as string]: `${Math.round(
+      layoutRowHeight * 2.5 - framePaddingTop,
+    )}px`,
     ['--widget-marker-column' as string]: `${preset.markerColumn}px`,
     ['--widget-row-gap' as string]: `${preset.rowGap}px`,
     ['--widget-cell-gap' as string]: `${preset.cellGap}px`,
