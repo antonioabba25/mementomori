@@ -14,9 +14,7 @@ dist-ssr
 playwright-report
 test-results
 .wrangler
-.tmp-verification/
-.tmp-verification-2/
-.tmp-verification-3/
+.tmp-*/
 
 # Editor directories and files
 .vscode/*
