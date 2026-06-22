@@ -12,6 +12,10 @@ interface LifeWeeksGridProps {
 export const LifeWeeksGrid = forwardRef<HTMLElement, LifeWeeksGridProps>(
   function LifeWeeksGrid({ quote, variant = 'screen', visualization }, ref) {
     const birthYear = visualization.birthDate.getFullYear()
+    const quoteLength = quote.length
+    const quoteScale =
+      quoteLength > 58 ? 'long' : quoteLength > 44 ? 'medium' : 'short'
+    const shouldAnchorQuote = variant === 'widget'
 
     return (
       <article
@@ -20,9 +24,11 @@ export const LifeWeeksGrid = forwardRef<HTMLElement, LifeWeeksGridProps>(
       >
         <header className="composition-header">
           <h2>MEMENTO MORI</h2>
-          <p className="composition-quote" data-testid="composition-quote">
-            {quote}
-          </p>
+          {shouldAnchorQuote ? null : (
+            <p className="composition-quote" data-testid="composition-quote">
+              {quote}
+            </p>
+          )}
         </header>
 
         <section
@@ -49,6 +55,16 @@ export const LifeWeeksGrid = forwardRef<HTMLElement, LifeWeeksGridProps>(
             />
           </div>
         </section>
+
+        {shouldAnchorQuote ? (
+          <p
+            className="composition-quote composition-quote--lockscreen"
+            data-quote-scale={quoteScale}
+            data-testid="composition-quote"
+          >
+            {quote}
+          </p>
+        ) : null}
       </article>
     )
   },

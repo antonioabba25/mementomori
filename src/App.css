@@ -406,7 +406,7 @@
   position: absolute;
   top: var(--widget-header-center-y, 113px);
   left: 50%;
-  width: min(100%, var(--widget-quote-max-width, 760px));
+  width: min(100%, 760px);
   padding-bottom: 0;
   transform: translate(-50%, -50%);
 }
@@ -418,19 +418,37 @@
 }
 
 .life-composition--widget .composition-quote {
-  max-width: var(--widget-quote-max-width, 760px);
-  margin-top: var(--widget-quote-margin-top, 22px);
-  margin-bottom: 0;
+  max-width: var(--widget-quote-max-width, 580px);
   color: rgba(79, 69, 59, 0.9);
-  font-size: var(--widget-quote-font-size, 31px);
-  line-height: 1.36;
+  font-size: var(--widget-quote-font-size, 34px);
+  line-height: 1.24;
+}
+
+.life-composition--widget .composition-quote--lockscreen {
+  position: absolute;
+  right: 50%;
+  bottom: var(--widget-quote-bottom, 110px);
+  width: min(100%, var(--widget-quote-max-width, 580px));
+  margin: 0;
+  color: rgba(47, 36, 24, 0.86);
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 249, 238, 0.48);
+  transform: translateX(50%);
+}
+
+.life-composition--widget .composition-quote--lockscreen[data-quote-scale='medium'] {
+  font-size: calc(var(--widget-quote-font-size, 34px) - 2px);
+}
+
+.life-composition--widget .composition-quote--lockscreen[data-quote-scale='long'] {
+  font-size: calc(var(--widget-quote-font-size, 34px) - 4px);
 }
 
 .life-composition--widget .life-grid {
   position: absolute;
   top: var(--widget-grid-top, 267px);
   left: 50%;
-  width: calc(var(--widget-grid-width, 100%) * 0.96);
+  width: calc(var(--widget-grid-width, 100%) * 0.88);
   transform: translateX(-50%);
 }
 
@@ -446,6 +464,19 @@
 .life-composition--widget .year-row__marker {
   font-size: var(--widget-marker-font-size, 28px);
   line-height: 1;
+}
+
+.life-composition--widget .year-row__marker span {
+  display: block;
+  transform: scale(var(--widget-marker-scale, 1));
+}
+
+.life-composition--widget .year-row__marker--left span {
+  transform-origin: right center;
+}
+
+.life-composition--widget .year-row__marker--right span {
+  transform-origin: left center;
 }
 
 .life-composition--widget .year-row__marker--left {

@@ -12,10 +12,10 @@ export interface MobileWallpaperPreset {
   markerColumn: number
   markerFontSize: number
   markerPaddingRight: number
+  markerScale: number
   pixelRatio: number
+  quoteBottom: number
   quoteFontSize: number
-  quoteMarginBottom: number
-  quoteMarginTop: number
   quoteMaxWidth: number
   rowGap: number
   safeBottomRatio: number
@@ -40,17 +40,17 @@ export const MOBILE_WIDGET_PRESET: MobileWallpaperPreset = {
   safeBottomRatio: 0.176,
   contentScale: 0.885,
   contentOffsetY: -108,
-  markerColumn: 78,
+  markerColumn: 90,
   markerFontSize: 16,
-  markerPaddingRight: 12,
+  markerPaddingRight: 10,
+  markerScale: 1.5,
   rowGap: 12,
   cellGap: 2,
   titleFontSize: 46,
   titleLetterSpacing: 12,
-  quoteFontSize: 29,
-  quoteMaxWidth: 760,
-  quoteMarginTop: 18,
-  quoteMarginBottom: 26,
+  quoteBottom: 110,
+  quoteFontSize: 34,
+  quoteMaxWidth: 580,
   weekCellAspectRatio: 1,
 }
 
@@ -91,14 +91,14 @@ export function getMobileWallpaperFrameStyle(
     ['--widget-content-offset-y' as string]: `${preset.contentOffsetY}px`,
     ['--widget-marker-font-size' as string]: `${preset.markerFontSize}px`,
     ['--widget-marker-padding-right' as string]: `${preset.markerPaddingRight}px`,
+    ['--widget-marker-scale' as string]: `${preset.markerScale}`,
     ['--widget-safe-bottom' as string]: `${Math.round(preset.frameHeight * preset.safeBottomRatio)}px`,
     ['--widget-safe-top' as string]: `${Math.round(preset.frameHeight * preset.safeTopRatio)}px`,
     ['--widget-title-font-size' as string]: `${preset.titleFontSize}px`,
     ['--widget-title-letter-spacing' as string]: `${preset.titleLetterSpacing}px`,
+    ['--widget-quote-bottom' as string]: `${preset.quoteBottom}px`,
     ['--widget-quote-font-size' as string]: `${preset.quoteFontSize}px`,
     ['--widget-quote-max-width' as string]: `${preset.quoteMaxWidth}px`,
-    ['--widget-quote-margin-top' as string]: `${preset.quoteMarginTop}px`,
-    ['--widget-quote-margin-bottom' as string]: `${preset.quoteMarginBottom}px`,
     ['--widget-week-cell-aspect' as string]: `${preset.weekCellAspectRatio}`,
   }
 }
