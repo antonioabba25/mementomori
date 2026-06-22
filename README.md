@@ -144,6 +144,15 @@ responsivo, rode também:
 npm run test:e2e
 ```
 
+Toda alteração de interface, UI, layout, composição visual, tipografia,
+responsividade ou exportação deve ser validada com prints da tela. Use
+preferencialmente capturas via Playwright e, quando a mudança afetar o wallpaper
+final, compare também a prévia em tela com a imagem JPG exportada. A validação
+deve observar posicionamento dos objetos, hierarquia visual, legibilidade,
+alinhamentos, espaçamentos, proporções, marcadores, grade e possíveis
+sobreposições com relógio, status bar, aplicativos, dock ou controles do
+sistema em uso como plano de fundo mobile.
+
 Cobertura atual:
 
 - `src/lib/life-weeks.test.ts`: validação e cálculo de semanas.

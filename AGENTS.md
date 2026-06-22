@@ -166,6 +166,27 @@ Mudanças em `life-weeks.ts` devem ter testes unitários. Mudanças na exportaç
 devem considerar testes em `ExportButton.test.tsx` e validação visual/manual
 quando necessário.
 
+## Validação Visual por Prints
+
+Toda alteração de interface, UI, layout, composição visual, tipografia,
+espaçamento, responsividade ou exportação deve ser acompanhada por prints da
+tela para teste e validação.
+
+Ao validar visualmente:
+
+- gerar ou capturar print da tela afetada, preferencialmente via Playwright
+  quando a aplicação estiver rodando em navegador;
+- comparar a prévia em tela com a imagem exportada quando a mudança afetar o
+  wallpaper final;
+- diagnosticar posicionamento dos objetos, hierarquia visual, legibilidade,
+  alinhamentos, espaçamentos, proporções, marcadores, grade e eventuais
+  sobreposições;
+- verificar o uso como wallpaper mobile quando a mudança afetar a composição
+  exportável, considerando áreas ocupadas por relógio, status bar, widgets,
+  aplicativos, dock e controles do sistema;
+- registrar no resumo da entrega quais prints foram usados e o que foi
+  verificado.
+
 ## Organização e Limpeza
 
 - A raiz deve conter apenas configuração, entrada do app, documentação principal
