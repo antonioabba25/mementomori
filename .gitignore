@@ -15,6 +15,7 @@ playwright-report
 test-results
 .wrangler
 .tmp-*/
+docs/archive/NEXTFEATURES.md
 
 # Editor directories and files
 .vscode/*
