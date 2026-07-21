@@ -268,6 +268,34 @@
   gap: 9px;
 }
 
+.export-button__fallback {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.export-button__download-link,
+.export-button__share {
+  box-sizing: border-box;
+  border: 1px solid rgba(143, 109, 67, 0.46);
+  border-radius: 0;
+  background: rgba(255, 249, 238, 0.38);
+  color: var(--tone-bronze);
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 620;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  padding: 11px 13px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.export-button__share {
+  cursor: pointer;
+}
+
 .export-button__hint {
   max-width: 21rem;
   min-height: 1.2rem;
@@ -723,6 +751,16 @@
 
   .export-button {
     align-items: stretch;
+  }
+
+  .export-button__fallback {
+    justify-content: stretch;
+  }
+
+  .export-button__download-link,
+  .export-button__share {
+    flex: 1 1 100%;
+    text-align: center;
   }
 
   .export-button__hint,

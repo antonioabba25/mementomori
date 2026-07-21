@@ -5,7 +5,7 @@ import { createLifeVisualization } from '../lib/life-weeks'
 import { ExportButton } from './ExportButton'
 
 const { toJpegMock } = vi.hoisted(() => ({
-  toJpegMock: vi.fn(async () => 'data:image/jpeg;base64,fake'),
+  toJpegMock: vi.fn(async () => 'data:image/jpeg;base64,/9j/'),
 }))
 
 vi.mock('html-to-image', () => ({
@@ -15,6 +15,13 @@ vi.mock('html-to-image', () => ({
 describe('ExportButton', () => {
   beforeEach(() => {
     toJpegMock.mockClear()
+    vi.stubGlobal(
+      'URL',
+      Object.assign(URL, {
+        createObjectURL: vi.fn(() => 'blob:http://localhost/exported-jpg'),
+        revokeObjectURL: vi.fn(),
+      }),
+    )
   })
 
   it('exports the single final mobile wallpaper preset', async () => {
@@ -37,7 +44,7 @@ describe('ExportButton', () => {
       expect(stage.textContent).toContain('MEMENTO MORI')
       expect(stage.textContent).toContain('O tempo não negocia com distrações.')
 
-      return 'data:image/jpeg;base64,fake'
+      return 'data:image/jpeg;base64,/9j/'
     })
 
     const anchorClickMock = vi
@@ -63,6 +70,9 @@ describe('ExportButton', () => {
         pixelRatio: 2,
       }),
     )
+    expect(
+      screen.getByRole('link', { name: 'Abrir JPG gerado' }).getAttribute('href'),
+    ).toBe('blob:http://localhost/exported-jpg')
 
     anchorClickMock.mockRestore()
   })
